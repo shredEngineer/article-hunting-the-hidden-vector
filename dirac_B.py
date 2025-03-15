@@ -52,7 +52,7 @@ plotter.camera.zoom(1.4)
 plotter.show_axes()
 
 # --- Interaktiv + Kamera ausgeben ---
-plotter.show(auto_close=False, interactive=True)
+plotter.show(auto_close=False, interactive=False)
 
 cpos = plotter.camera_position
 print("View vector (camera position):", np.array(cpos[0]))
