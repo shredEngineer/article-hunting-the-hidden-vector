@@ -52,13 +52,25 @@ plotter.renderer.SetBackgroundAlpha(0)
 
 plotter.add_mesh(glyphs, scalars="magnitude", cmap="viridis", show_scalar_bar=False)
 
-# --- Dirac-String als roter Zylinder (vollständig durch das Volumen) ---
-string_center = (0, 0, 0)         # Zentrum bei z = 0
-string_height = 3.0
+# --- Dirac-String als roter Zylinder (nur von z=0 nach z=-zl) ---
+zl = 1.6
+string_center = (0, 0, -zl/2)
+string_height = zl
 string_radius = 0.02
-dirac_string = pv.Cylinder(center=string_center, direction=(0, 0, 1),
+dirac_string = pv.Cylinder(center=string_center, direction=(0, 0, -1),
                            radius=string_radius, height=string_height)
 plotter.add_mesh(dirac_string, color="red", opacity=0.6)
+
+# --- Pfeilspitze am Ende des Dirac-Strings (bei z = -zl) ---
+arrow_tip = pv.Cone(center=(0, 0, -zl), direction=(0, 0, -1),
+                    height=0.2, radius=0.05)
+plotter.add_mesh(arrow_tip, color="red", opacity=0.8)
+
+# --- Beschriftung der z-Ebenen ---
+plotter.add_point_labels([ (-1.5, .4, -1), (-1.5, .4, 0), (-1.5, .4, 1) ],
+                         ["z = –1", "z = 0", "z = 1"],
+                         font_size=32, text_color="black", point_color="white",
+                         shape_opacity=0.0, always_visible=True)
 
 # --- Kamera ---
 plotter.view_vector([0, 8, 2], viewup=[0, 0, 1])
